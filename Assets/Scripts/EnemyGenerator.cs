@@ -72,7 +72,7 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private Image _hpGauge;
     [SerializeField] private LogLecorder _logLecorder;
     [SerializeField] private CharacterMove _characterMove;
-    [SerializeField] private MagicController _magicController; // 追加
+    [SerializeField] private MagicController _magicController;
 
     [Header("UI")]
     [SerializeField] private GameObject clearText;
@@ -260,18 +260,18 @@ public class EnemyGenerator : MonoBehaviour
         switch (existEnemy.type)
         {
             case MagicType.Water:
-                if (type == MagicType.Electric) damageMultiplier *= 1.5f;
-                if (type == MagicType.Fire) damageMultiplier *= 0.5f;
+                if (type == MagicType.Electric) damageMultiplier *= 2.0f;
+                if (type == MagicType.Fire) damageMultiplier *= 0.75f;
                 break;
                 
             case MagicType.Leaf:
-                if (type == MagicType.Fire) damageMultiplier *= 1.5f;
-                if (type == MagicType.Electric) damageMultiplier *= 0.5f;
+                if (type == MagicType.Fire) damageMultiplier *= 2.0f;
+                if (type == MagicType.Electric) damageMultiplier *= 0.75f;
                 break;
                 
             case MagicType.Ice:
-                if (type == MagicType.Fire) damageMultiplier *= 4;
-                if (type == MagicType.Electric) damageMultiplier *= 1;
+                if (type == MagicType.Fire) damageMultiplier *= 4.0f;
+                if (type == MagicType.Electric) damageMultiplier *= 1.0f;
                 break;
         }
 
