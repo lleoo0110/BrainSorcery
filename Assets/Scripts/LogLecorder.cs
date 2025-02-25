@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class LogLecorder : MonoBehaviour
 {
     [SerializeField] private CSVSaver CSVSaver = null;
+    [SerializeField] [Tooltip("ログファイルのベース名 (BaseName_Timestamp.csvで保存されます)")]
+    private string baseFileName = "GameLog"; // インスペクタで変更可能なデフォルト名
 
     private int eType = -1;
     private float knockOutTime = -1;
@@ -15,13 +18,14 @@ public class LogLecorder : MonoBehaviour
 
     private void Start()
     {
-        string nme =
-            DateTime.Now.Month.ToString() + "-" + 
-            DateTime.Now.Day.ToString() + "-" +
-            DateTime.Now.Hour.ToString() + "-" +
-            DateTime.Now.Minute.ToString() + "-" +
-            DateTime.Now.Second.ToString();
-        pathName = Application.dataPath + "/StreamingAssets/" + nme + ".csv";
+        // タイムスタンプを生成 (YYYYMMDD_HHMMSS形式)
+        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        
+        // 指定形式でファイル名を生成: [baseFileName]_[timestamp].csv
+        string fileName = $"{baseFileName}_{timestamp}.csv";
+        
+        // フルパスを設定
+        pathName = Path.Combine(Application.dataPath, "StreamingAssets", fileName);
     }
 
     public void SetEType(int eType)
@@ -62,6 +66,13 @@ public class LogLecorder : MonoBehaviour
         line.AddRange(inputs);
 
         Debug.Log(line);
+
+        // ディレクトリが存在しない場合は作成
+        string directory = Path.GetDirectoryName(pathName);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
 
         CSVSaver.WriteCSV(pathName, line.ToArray());
 

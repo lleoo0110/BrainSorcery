@@ -14,6 +14,8 @@ public class InputDebugger : MonoBehaviour
     }
 
     [SerializeField] private DebugableInputBases[] debugableInputBases;
+    [SerializeField] private LogLecorder _logLecorder;
+
 
     private void Start()
     {
@@ -23,7 +25,7 @@ public class InputDebugger : MonoBehaviour
             {
                 Debug.Log(debugableInputBase.inputNum.ToString() + " is on");
 
-                //_logLecorder.AddInput(debugableInputBase.inputNum);
+                _logLecorder.AddInput(debugableInputBase.inputNum);
             });
             debugableInputBase.input.AssignInputOffCallback(() =>
             {

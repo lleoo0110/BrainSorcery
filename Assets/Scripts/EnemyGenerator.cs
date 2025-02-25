@@ -66,8 +66,8 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private Enemy _waterGolem;
     [SerializeField] private Enemy _leafGolem;
     [SerializeField] private Enemy _fireGolem;
-    [SerializeField] private Enemy _iceDragon;
-    [SerializeField] private Enemy _fireDragon;
+    // [SerializeField] private Enemy _iceDragon;
+    // [SerializeField] private Enemy _fireDragon;
     [SerializeField] private Transform _generateParent;
     [SerializeField] private Image _hpGauge;
     [SerializeField] private LogLecorder _logLecorder;
@@ -109,8 +109,8 @@ public class EnemyGenerator : MonoBehaviour
         enemySequence[0] = _waterGolem;
         enemySequence[1] = _leafGolem;
         enemySequence[2] = _fireGolem;
-        enemySequence[3] = _iceDragon;
-        enemySequence[4] = _fireDragon;
+        // enemySequence[3] = _iceDragon;
+        // enemySequence[4] = _fireDragon;
     }
 
     private void Update()
@@ -260,44 +260,44 @@ public class EnemyGenerator : MonoBehaviour
         switch (existEnemy.type)
         {
             case MagicType.Water:
-                if (type == MagicType.Electric) damageMultiplier *= 2.0f;
-                if (type == MagicType.Fire) damageMultiplier *= 0.75f;
+                if (type == MagicType.Electric) damageMultiplier *= 1.0f;
+                if (type == MagicType.Fire) damageMultiplier *= 1.0f;
                 break;
                 
             case MagicType.Leaf:
-                if (type == MagicType.Fire) damageMultiplier *= 2.0f;
-                if (type == MagicType.Electric) damageMultiplier *= 0.75f;
+                if (type == MagicType.Fire) damageMultiplier *= 1.0f;
+                if (type == MagicType.Electric) damageMultiplier *= 1.0f;
                 break;
                 
             case MagicType.Ice:
-                if (type == MagicType.Fire) damageMultiplier *= 4.0f;
+                if (type == MagicType.Fire) damageMultiplier *= 1.0f;
                 if (type == MagicType.Electric) damageMultiplier *= 1.0f;
                 break;
         }
 
         // Fire GolemとFire Dragonの特殊効果：コンボでダメージが増加
-        if (existEnemy.prefab.name.Contains("Fire Golem") || existEnemy.prefab.name.Contains("Fire Dragon"))
-        {
-            if ((type == MagicType.Fire && existEnemy.lastHitType == MagicType.Electric) ||
-                (type == MagicType.Electric && existEnemy.lastHitType == MagicType.Fire))
-            {
-                existEnemy.comboCount++;
-                if (existEnemy.comboCount > 1)
-                {
-                    damageMultiplier *= (1 + existEnemy.comboCount * 1.0f);
-                }
-            }
-            else
-            {
-                existEnemy.comboCount = 0;
-            }
-        }
+        // if (existEnemy.prefab.name.Contains("Fire Golem") || existEnemy.prefab.name.Contains("Fire Dragon"))
+        // {
+        //     if ((type == MagicType.Fire && existEnemy.lastHitType == MagicType.Electric) ||
+        //         (type == MagicType.Electric && existEnemy.lastHitType == MagicType.Fire))
+        //     {
+        //         existEnemy.comboCount++;
+        //         if (existEnemy.comboCount > 1)
+        //         {
+        //             damageMultiplier *= (1 + existEnemy.comboCount * 1.0f);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         existEnemy.comboCount = 0;
+        //     }
+        // }
 
         existEnemy.lastHitType = type;
         existEnemy.hp -= dam * damageMultiplier;
         
         // ダメージ計算後の状態をログ出力
-        Debug.Log($"攻撃後 HP: {existEnemy.hp}/{existEnemy.maxHP}");
+        // Debug.Log($"攻撃後 HP: {existEnemy.hp}/{existEnemy.maxHP}");
 
         _hpGauge.fillAmount = existEnemy.hpRate;
 
